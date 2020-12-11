@@ -6,10 +6,9 @@ void printArray(int *A,int n){
     printf("\n");
 }
 void quicksort(int *a , int n ){
-    int pivotIndex = 0, pivot = *(a+pivotIndex);
-    int temp;
-    int *p = NULL;
-    int leftIndex = 1;
+    int pivotIndex = 0, pivot = *(a+pivotIndex), temp, *p = NULL, leftIndex;
+    
+    for (leftIndex = 1; *(a + leftIndex ) < pivot; leftIndex++);
 
     //base case
     if(n == 0 || n == 1) return ;
@@ -18,14 +17,18 @@ void quicksort(int *a , int n ){
     //begin from the end everytime you encounter a value < pivot
     //put it in the first part of the array
     //at index leftIndex which increments when you add elts to this part
+    //to skip elts who should stay in the first part of the array
     for(p = a + n - 1 ; p >= a + leftIndex ; ){
+        
+        
         if (*p < pivot){
             //put in the beginning of the array
             //then advance leftIndex
             temp = *p;
             *p = *(a + leftIndex);
             *(a +leftIndex ) = temp;
-            leftIndex++;
+            while(*(a + leftIndex ) < pivot)
+                leftIndex++;
         }
         else
             p--;
